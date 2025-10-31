@@ -44,13 +44,13 @@ Resources:
                     - "sqs:ChangeMessageVisibility"
                   Resource:  !GetAtt sqsQueue.Arn
 
-      LambdaFunctionEventSourceMapping:
-          Type: AWS::Lambda::EventSourceMapping
-          Properties:
-            BatchSize: 10
-            EventSourceArn: !GetAtt sqsQueue.Arn
-            FunctionName: !Ref lambdaFunctioniamRole.Arn
-            Enabled: True
+    LambdaFunctionEventSourceMapping:
+        Type: AWS::Lambda::EventSourceMapping
+        Properties:
+          BatchSize: 10
+          EventSourceArn: !GetAtt sqsQueue.Arn
+          FunctionName: !Ref lambdaFunctioniamRole.Arn
+          Enabled: True
 
   lambdaFunction:
     Type: AWS::Lambda::Function
