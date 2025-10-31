@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Cloudformation demo"
+Parameters: 
+  Environment:
+    Description: Environment Name
+    Type: String
+Resources: 
+  lambdaFunctioniamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path:
+        AssumeRolePolicyDocument: 
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: lambda.amazonaws.com
+              Action: sts:AssumeRole
+      Policies:
+        - PolicyName: "rayna-demo-cloudformation-lambda-policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+                - Effect: "Allow"
+                  Action: 
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource: "*"
+  lambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: "Cloudformation demo Lamda"
+      FunctionName: !Sub rayna-demo-cloudformation${Environment}
+      Handler: cloudformation-demo::cloudformation_demo.Function::FunctionHandler
+      MemorySize: 128
+      Role: !GetAtt lambdaFunctioniamRole.Arn
+      Runtime: dotnet8
+      Timeout: 30
+      Environment:
+        Variables:
+          key1: value1 # A map of key-value pairs that the Lambda function can access
+      Code:
+        S3Bucket: rayna-demo-cloudformation-packages
+        S3Key: lambda.zip
+      Tags:
+        - Key: keyname
+          Value: value
