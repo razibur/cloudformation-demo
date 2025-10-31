@@ -72,4 +72,5 @@ jobs:
       with:
         name: cloudformation-demo
         template: ./artifact/deployment.yaml
-        parameter-overrides: "Environment=-Test"    
+        parameter-overrides: "Environment=-Test"   
+        no-fail-on-empty-changeset: "1"
