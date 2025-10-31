@@ -58,7 +58,7 @@ jobs:
     - uses: actions/download-artifact@v5
       with:
         name: lambda
-        path: artifact
+        path: ./artifact
     
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v5.1.0
