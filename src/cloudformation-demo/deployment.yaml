@@ -49,7 +49,7 @@ Resources:
       Properties:
         BatchSize: 10
         EventSourceArn: !GetAtt sqsQueue.Arn
-        FunctionName: !Ref lambdaFunction.Arn
+        FunctionName: !GetAtt lambdaFunction.Arn
         Enabled: True
 
   lambdaFunction:
